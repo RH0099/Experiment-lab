@@ -27,7 +27,7 @@ function showSuggestions() {
 
 // 🤖 AI ইন্টিগ্রেশন (GPT API থেকে তথ্য আনা)
 async function getAIResponse(query) {
-    const apiKey = "YOUR_OPENAI_API_KEY"; // আপনার OpenAI API Key দিন
+    const apiKey = "https://tcsdemonic.vercel.app/api/chat?question="; // আপনার OpenAI API Key দিন
     const response = await fetch("https://api.openai.com/v1/completions", {
         method: "POST",
         headers: {
