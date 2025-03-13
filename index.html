@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Virtual Design Platform</title>
+    <title>AI Virtual 3D Camera</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <!-- ভার্চুয়াল ডিজাইন স্ক্রিন -->
+        <!-- ভার্চুয়াল 3D ডিজাইন এরিয়া -->
         <div class="canvas-container">
             <video id="video" autoplay></video>
             <canvas id="canvas"></canvas>
+            <canvas id="virtualCanvas"></canvas>
         </div>
 
         <!-- কন্ট্রোল প্যানেল -->
@@ -23,6 +24,8 @@
         </div>
     </div>
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://docs.opencv.org/4.5.1/opencv.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
