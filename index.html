@@ -1,23 +1,15 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI ল্যাবরেটরি</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>AI Camera with Object Tracking</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <div class="container">
-        <h1>🔬 AI ল্যাবরেটরি</h1>
-        <input type="text" id="searchBox" placeholder="এক্সপেরিমেন্ট বা তথ্য অনুসন্ধান করুন..." oninput="showSuggestions()">
-        <button onclick="searchExperiment()">🔍 Search</button>
-        <button onclick="startVoiceSearch()">🎙️ Voice</button>
-        <ul id="suggestions"></ul>
-        <div id="result"></div>
-        <canvas id="experimentCanvas"></canvas>
-    </div>
-
+    <h1>AI Camera - Object Tracking</h1>
+    <video id="video" autoplay></video>
+    <canvas id="canvas"></canvas>
     <script src="script.js"></script>
 </body>
 </html>
