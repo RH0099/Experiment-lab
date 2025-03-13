@@ -7,8 +7,53 @@ body {
     text-align: center;
 }
 
-/* কন্টেইনার */
 .container {
     display: flex;
     flex-direction: column;
     height: 100vh;
+}
+
+/* ভিডিও ক্যামেরা */
+.canvas-container {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+video, canvas {
+    position: absolute;
+    width: 80%;
+    height: 100%;
+}
+
+#virtualCanvas {
+    position: absolute;
+    width: 80%;
+    height: 100%;
+}
+
+/* কন্ট্রোল প্যানেল */
+.control-panel {
+    height: 20vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+button {
+    background: #ff5722;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background: #e64a19;
+}
