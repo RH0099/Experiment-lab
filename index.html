@@ -3,13 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Camera with Object Tracking</title>
+    <title>AI Virtual Design Platform</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>AI Camera - Object Tracking</h1>
-    <video id="video" autoplay></video>
-    <canvas id="canvas"></canvas>
+    <div class="container">
+        <!-- ভার্চুয়াল ডিজাইন স্ক্রিন -->
+        <div class="canvas-container">
+            <video id="video" autoplay></video>
+            <canvas id="canvas"></canvas>
+        </div>
+
+        <!-- কন্ট্রোল প্যানেল -->
+        <div class="control-panel">
+            <button id="record">🎥 রেকর্ড</button>
+            <button id="save">💾 সেভ</button>
+            <button id="download">⬇️ ডাউনলোড</button>
+            <button id="new">🆕 নতুন প্রোজেক্ট</button>
+        </div>
+    </div>
+    
     <script src="script.js"></script>
 </body>
 </html>
