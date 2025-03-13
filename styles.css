@@ -25,13 +25,10 @@ h1 {
     max-width: 600px;
     height: 60vh;
     background: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     border: 2px solid #ff5722;
     border-radius: 10px;
     margin: 20px 0;
-    overflow: hidden; /* ডাবল স্ক্রিন সমস্যা ফিক্স */
+    overflow: hidden;
 }
 
 video, canvas {
@@ -40,7 +37,7 @@ video, canvas {
     position: absolute;
 }
 
-.control-panel {
+.controls {
     display: flex;
     justify-content: center;
     gap: 10px;
