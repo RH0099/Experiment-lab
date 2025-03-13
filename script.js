@@ -1,75 +1,37 @@
-const experiments = {
-    "গ্লাসের মধ্যে পানি ও লবণ": "লবণ দ্রবীভূত হয়ে নুনের দ্রবণ তৈরি হয়।",
-    "গরম পানিতে বরফ দিলে কি হয়": "বরফ দ্রুত গলে যায়।",
-    "কোকা-কোলা ও মেন্টস মেশালে কি হয়": "বিস্ফোরণ হয়, কারণ CO₂ গ্যাস বেরিয়ে আসে।",
-    "লোহা ও চুম্বকের বিক্রিয়া": "লোহা চুম্বকের আকর্ষণে আটকে যায়।",
-    "ডিমকে ভিনেগারে রাখলে কি হয়": "ডিমের খোসা নরম হয়ে যায়।"
-};
+const video = document.getElementById('video');
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
 
-// 🔍 অটো-সাজেশন ফিচার
-function showSuggestions() {
-    let query = document.getElementById("searchBox").value.toLowerCase();
-    let suggestionBox = document.getElementById("suggestions");
-    suggestionBox.innerHTML = "";
+// ক্যামেরা চালু করা
+navigator.mediaDevices.getUserMedia({ video: true })
+    .then(stream => {
+        video.srcObject = stream;
+    })
+    .catch(err => console.error("Camera Access Denied!", err));
 
-    for (let key in experiments) {
-        if (key.toLowerCase().includes(query) && query !== "") {
-            let suggestionItem = document.createElement("li");
-            suggestionItem.innerText = key;
-            suggestionItem.onclick = function() {
-                document.getElementById("searchBox").value = key;
-                suggestionBox.innerHTML = "";
-            };
-            suggestionBox.appendChild(suggestionItem);
+function detectColor() {
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    let frame = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let length = frame.data.length;
+
+    for (let i = 0; i < length; i += 4) {
+        let red = frame.data[i];
+        let green = frame.data[i + 1];
+        let blue = frame.data[i + 2];
+
+        // নীল রঙ শনাক্তকরণ (Blue Pen Detection)
+        if (blue > 150 && red < 100 && green < 100) {
+            frame.data[i] = 255; // Red
+            frame.data[i + 1] = 0; // Green
+            frame.data[i + 2] = 0; // Blue
         }
     }
+
+    ctx.putImageData(frame, 0, 0);
+    requestAnimationFrame(detectColor);
 }
 
-// 🤖 AI ইন্টিগ্রেশন (GPT API থেকে তথ্য আনা)
-async function getAIResponse(query) {
-    const apiKey = "https://tcsdemonic.vercel.app/api/chat?question="; // আপনার OpenAI API Key দিন
-    const response = await fetch("https://api.openai.com/v1/completions", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${apiKey}`
-        },
-        body: JSON.stringify({
-            model: "text-davinci-003",
-            prompt: `Explain the scientific experiment: ${query}`,
-            max_tokens: 100
-        })
-    });
-
-    const data = await response.json();
-    return data.choices[0].text.trim();
-}
-
-// 🔎 এক্সপেরিমেন্ট সার্চ
-async function searchExperiment() {
-    let query = document.getElementById("searchBox").value;
-    let resultDiv = document.getElementById("result");
-
-    if (query in experiments) {
-        resultDiv.innerHTML = `<strong>রেজাল্ট:</strong> ${experiments[query]}`;
-    } else {
-        resultDiv.innerHTML = `<strong>AI চিন্তা করছে...</strong>`;
-        let aiResult = await getAIResponse(query);
-        resultDiv.innerHTML = `<strong>AI রেজাল্ট:</strong> ${aiResult}`;
-        experiments[query] = aiResult; // নতুন তথ্য স্টোর করছে
-    }
-}
-
-// 🎙️ ভয়েস সার্চ ফিচার
-function startVoiceSearch() {
-    const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
-    recognition.lang = 'bn-BD';
-    recognition.start();
-
-    recognition.onresult = function(event) {
-        const voiceText = event.results[0][0].transcript;
-        document.getElementById("searchBox").value = voiceText;
-        searchExperiment();
-    };
-}
-
+video.addEventListener('play', detectColor);
